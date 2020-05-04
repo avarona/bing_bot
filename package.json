@@ -1,0 +1,12 @@
+{
+  "name": "bing_bot",
+  "version": "1.0.0",
+  "description": "Bot that searches random words on bing everyday",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "avarona",
+  "license": "ISC",
+  "dependencies": {}
+}
