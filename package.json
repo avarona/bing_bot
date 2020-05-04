@@ -8,5 +8,8 @@
   },
   "author": "avarona",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  }
 }
