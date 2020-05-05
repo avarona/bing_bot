@@ -29,6 +29,7 @@ const searchLoop = async (driver, arr) => {
     await driver.wait(until.elementLocated(By.id('b_content')), 10000)
 
     // Log searched word and rewards points
+    await driver.wait(until.elementLocated(By.id('id_rc')));
     const rewardsCount = await driver.findElement(By.id('id_rc')).getText();
     console.log(`searched: ${arr[i]} @${rewardsCount} points`);
 

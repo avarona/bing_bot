@@ -1,10 +1,12 @@
 require('dotenv').config();
 const { Builder } = require('selenium-webdriver');
+const firefox = require('selenium-webdriver/firefox');
 const { signIn, signOut } = require('./js/auth');
 const { getKeywords, searchLoop } = require('./js/search');
 
 // Create browser instance
-const driver = new Builder().forBrowser('chrome').build();
+const firefoxOptions = new firefox.Options().headless();
+const driver = new Builder().forBrowser('firefox').setFirefoxOptions(firefoxOptions).build();
 
 const { E, P } = process.env;
 
