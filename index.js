@@ -13,7 +13,7 @@ const { E, P } = process.env;
 
 // Main script
 const main = (async () => {
-	try{
+	try {
 		// Sign in to user
 		await signIn(driver, { E, P });
 		

@@ -3,6 +3,7 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
+    working_directory: /usr/src/app
     docker:
       - image: avarona/browser-test:latest
     steps:
@@ -10,6 +11,9 @@ jobs:
       - run: yarn install
       - run: yarn start
 workflows:
+  build:
+    jobs:
+      - build
   nightly:
     triggers:
       - schedule:
