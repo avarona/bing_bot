@@ -1,0 +1,20 @@
+version: 2.1
+orbs:
+jobs:
+  build:
+    docker:
+      image: avarona/bing_bot:latest
+    steps:
+      - checkout
+      - run yarn start
+workflows:
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 1 * * *"
+          filter:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
