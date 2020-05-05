@@ -1,18 +1,20 @@
 version: 2.1
 orbs:
+  docker: circleci/docker@1.0.1
 jobs:
   build:
     docker:
-      image: avarona/bing_bot:latest
+      - image: avarona/browser-test:latest
     steps:
       - checkout
-      - run yarn start
+      - run: yarn install
+      - run: yarn start
 workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 1 * * *"
-          filter:
+          cron: "0 12 * * *"
+          filters:
             branches:
               only:
                 - master
