@@ -14,6 +14,7 @@ const getKeywords = async (number) => {
 
 const searchLoop = async (driver, arr) => {
   console.log('Starting search loop...')
+  let total = 0;
   // Load the page
   await driver.get(bingHomeURL);
   await driver.wait(until.elementLocated(By.name('q')))
@@ -26,17 +27,18 @@ const searchLoop = async (driver, arr) => {
     // Enter word and click enter
     await driver.findElement(By.name('q')).sendKeys(arr[i], Key.RETURN);
     // Wait for the results box by id
-    await driver.wait(until.elementLocated(By.id('b_content')), 10000)
+    await driver.wait(until.elementLocated(By.id('b_content')))
 
-    // Log searched word and rewards points
-    await driver.wait(until.elementLocated(By.id('id_rc')));
-    const rewardsCount = await driver.findElement(By.id('id_rc')).getText();
-    console.log(`searched: ${arr[i]} @${rewardsCount} points`);
-
+    console.log(`Searched ${arr[i]}`)
     // Wait 5 seconds between searches
     await sleep(3000);
+    total += 1;
   }
-  console.log('Finished search')
+  await driver.wait(until.elementLocated(By.id('id_rc')));
+  const rewardsCount = await driver.findElement(By.id('id_rc')).getText();
+  
+  console.log(`Finished searching ${total} words`);
+  console.log(`${rewardsCount} earned`);
 };
 
 module.exports = { getKeywords, searchLoop };
