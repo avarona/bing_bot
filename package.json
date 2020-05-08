@@ -4,7 +4,11 @@
   "description": "Bot that searches random words on bing everyday",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "chmod +x ./scripts/*",
+    "docker:setup": "./scripts/dockerSetup.sh",
+    "docker:start": "./scripts/dockerStart.sh",
+    "docker:prune": "./scripts/dockerPrune.sh"
   },
   "author": "avarona",
   "license": "ISC",
