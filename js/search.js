@@ -36,7 +36,7 @@ const searchLoop = async (driver, arr) => {
 
       console.log(`Searched ${arr[i]}`)
       // Wait 3 seconds between searches
-      await sleep(2000);
+      await sleep(3000);
       total += 1;
     }
     await driver.wait(until.elementLocated(By.id('id_rc')));
