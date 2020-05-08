@@ -7,7 +7,6 @@ module.exports = {
   XPATHS: {
     emailInputPath: '/html/body/div/form[1]/div/div/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div/input[1]',
     passwordInputPath: '/html/body/div/form[1]/div/div/div[1]/div[2]/div[2]/div/div[2]/div/div[3]/div[2]/div/div/div/div/input',
-    passwordInputPathShort: '//*[@id="i0118"]',
     avatarAnchorPath: '/html/body/div[2]/div[2]/header/div/div/a[1]',
     signOutAnchorPath: '/html/body/div[2]/div[2]/header/div/div/span[1]/ul/li/a',
   }

@@ -12,17 +12,17 @@ const driver = new Builder().forBrowser('firefox').setFirefoxOptions(firefoxOpti
 const { E, P } = process.env;
 
 // Main script
-const main = (async () => {
+(async () => {
 	try {
 		// Sign in to user
 		await signIn(driver, { E, P });
-		
 		// Fetch random words & start search loop
 		const keywords = await getKeywords(30);
 		await searchLoop(driver, keywords);
-		
 		// Sign out of user
 		await signOut(driver);
+	} catch(err) {
+		console.log('Main index error', err);
 	} finally {
 		// Quit Selenium browser
 		await driver.quit();
