@@ -22,7 +22,7 @@ const signIn = async (driver, { E, P }) => {
     await driver.wait(until.elementLocated(By.xpath(passwordInputPath)));
     await driver.findElement(By.id('i0118')).sendKeys(P, Key.RETURN);
     // Wait for sign in to complete
-    await sleep(2000);
+    await sleep(3000);
     console.log('Done');
   } catch(err) {
     console.log('Error logging in: ', err);
@@ -41,7 +41,7 @@ const signOut = async (driver) => {
     await driver.wait(until.elementLocated(By.xpath(signOutAnchorPath)));
     await driver.findElement(By.xpath(signOutAnchorPath)).click();
     // Wait 3 second for logout
-    await sleep(2000);
+    await sleep(3000);
     console.log('Done');
   } catch(err) {
     console.log('Error logging out: ', err);
