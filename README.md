@@ -1,12 +1,15 @@
 # Bing Bot
-This bot completes automatic searches on bing. You can set up a cron job to run this on a daily schedule.
+This bot completes automatic searches from a list of random words on the bing search engine. You can set up a cron job to run this on a daily schedule.
+
+### What it does
+- Runs `desktop` searches on firefox
+- Runs `mobile` searches on chrome mobile emulation
 
 ### Coming soon:
-- Microsoft Edge searches (once released for linux)
-- Mobile browser searches
+- Microsoft Edge searches (once released for linux ~2020)
 
 ## Run it locally
-### Install prerequisites:
+### Install prerequisites (macOS):
   1. Install Homebrew
   ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
