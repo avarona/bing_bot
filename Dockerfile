@@ -16,7 +16,9 @@ RUN apk --update add \
   vim \
   git \
   dpkg=1.19.7-r0 \
-  firefox-esr=60.9.0-r0
+  firefox-esr=60.9.0-r0 \
+  chromium=77.0.3865.120-r0 \
+  chromium-chromedriver=77.0.3865.120-r0
 
 # Prereqs for geckodriver
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub

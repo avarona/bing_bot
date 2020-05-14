@@ -39,11 +39,7 @@ const searchLoop = async (driver, arr) => {
       await sleep(3000);
       total += 1;
     }
-    await driver.wait(until.elementLocated(By.id('id_rc')));
-    const rewardsCount = await driver.findElement(By.id('id_rc')).getText();
-    
     console.log(`Finished searching ${total} words`);
-    console.log(`${rewardsCount} earned!`);
   } catch(err) {
     console.log('Error while searching: ', err);
   }

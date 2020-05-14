@@ -2,12 +2,10 @@ const { By, Key, until } = require('selenium-webdriver');
 const { URLS, XPATHS } = require('../constants');
 const { sleep } = require('./utils');
 
-const { bingLoginURL, bingHomeURL } = URLS;
+const { bingLoginURL, bingAccountURL } = URLS;
 const { 
   emailInputPath,
   passwordInputPath,
-  avatarAnchorPath,
-  signOutAnchorPath
 } = XPATHS;
 
 const signIn = async (driver, { E, P }) => {
@@ -33,13 +31,13 @@ const signOut = async (driver) => {
   try {
     console.log('Logging out...');
     // Go to bing homepage
-    await driver.get(bingHomeURL);
+    await driver.get(bingAccountURL);
     // Select avatar CTA
-    await driver.wait(until.elementLocated(By.xpath(avatarAnchorPath)));
-    await driver.findElement(By.xpath(avatarAnchorPath)).click();
+    await driver.wait(until.elementLocated(By.id('mectrl_main_trigger')));
+    await driver.findElement(By.id('mectrl_main_trigger')).click();
     // Select logout CTA
-    await driver.wait(until.elementLocated(By.xpath(signOutAnchorPath)));
-    await driver.findElement(By.xpath(signOutAnchorPath)).click();
+    await driver.wait(until.elementLocated(By.id('mectrl_body_signOut')));
+    await driver.findElement(By.id('mectrl_body_signOut')).click();
     // Wait 3 second for logout
     await sleep(3000);
     console.log('Done');
