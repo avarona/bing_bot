@@ -3,10 +3,7 @@ const { URLS, XPATHS } = require('../constants');
 const { sleep } = require('./utils');
 
 const { bingLoginURL, bingAccountURL } = URLS;
-const { 
-  emailInputPath,
-  passwordInputPath,
-} = XPATHS;
+const { emailInputPath, passwordInputPath } = XPATHS;
 
 const signIn = async (driver, { E, P }) => {
   try {
@@ -23,7 +20,7 @@ const signIn = async (driver, { E, P }) => {
     await sleep(3000);
     console.log('Done');
   } catch(err) {
-    console.log('Error logging in: ', err);
+    throw new Error('Error logging in: ', err);
   }
 };
 
@@ -42,7 +39,7 @@ const signOut = async (driver) => {
     await sleep(3000);
     console.log('Done');
   } catch(err) {
-    console.log('Error logging out: ', err);
+    throw new Error('Error logging out: ', err);
   }
 };
 

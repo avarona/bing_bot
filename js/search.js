@@ -12,7 +12,7 @@ const getKeywords = async (number) => {
     console.log('Word list: ', parsed);
     return parsed;
   } catch(err) {
-    console.log('Error while fetching random words: ', err);
+    throw new Error('Error while fetching random words: ', err);
   }
 };
 
@@ -41,7 +41,7 @@ const searchLoop = async (driver, arr) => {
     }
     console.log(`Finished searching ${total} words`);
   } catch(err) {
-    console.log('Error while searching: ', err);
+    throw new Error('Error while searching: ', err);
   }
 };
 

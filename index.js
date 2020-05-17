@@ -42,7 +42,7 @@ const main = async (driver, min, max) => {
 		// Sign out of user
 		await signOut(driver);
 	} catch(err) {
-		console.log('Main script error', err);
+		throw new Error('Main script error: ', err);
 	} finally {
 		// Quit Selenium browser
 		await driver.quit();
@@ -62,7 +62,7 @@ const main = async (driver, min, max) => {
 		console.log('Browser done');
 	
 	} catch(err) {
-		console.log('Error in Browser: ', err);
+		throw new Error('Error in environment script: ', err);
 	} finally {
 		console.log('All searches completed');
 	}
