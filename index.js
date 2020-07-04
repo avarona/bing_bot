@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const { Builder, By, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 const chrome = require('selenium-webdriver/chrome');
@@ -61,9 +62,10 @@ const main = async (driver, min, max) => {
 		await main(browser, 30, 45);
 		console.log('Browser done');
 	
-	} catch(err) {
-		throw new Error('Error in environment script: ', err);
-	} finally {
 		console.log('All searches completed');
+	} catch(err) {
+		const screenshot = browser.saveScreenshot(); // returns base64 string buffer
+		fs.writeFileSync('/tmp/screenshots/picture.png', screenshot);
+		throw new Error('Error in environment script: ', err);
 	}
 })();
