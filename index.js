@@ -43,6 +43,8 @@ const main = async (driver, min, max) => {
 		// Sign out of user
 		await signOut(driver);
 	} catch(err) {
+		const screenshot = await driver.saveScreenshot(); // returns base64 string buffer
+		await fs.writeFileSync('/tmp/screenshots/error.png', screenshot);
 		throw new Error('Main script error: ', err);
 	} finally {
 		// Quit Selenium browser
@@ -64,8 +66,6 @@ const main = async (driver, min, max) => {
 	
 		console.log('All searches completed');
 	} catch(err) {
-		const screenshot = browser.saveScreenshot(); // returns base64 string buffer
-		fs.writeFileSync('/tmp/screenshots/picture.png', screenshot);
-		throw new Error('Error in environment script: ', err);
+		throw new Error('Error in environment script: ', err, err.name, err.message);
 	}
 })();

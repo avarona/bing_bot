@@ -25,6 +25,8 @@ const searchLoop = async (driver, arr) => {
     await driver.wait(until.elementLocated(By.name('q')));
     
     for(let i = 0; i < arr.length; i++) {
+      const screenshot = await driver.saveScreenshot(); // returns base64 string buffer
+		  await fs.writeFileSync(`/tmp/screenshots/${arr[i]}.png`, screenshot);
       // Clear input box
       await driver.findElement(By.name('q')).clear();
       // Find the search box
