@@ -66,6 +66,13 @@ const main = async (driver, min, max) => {
 	
 		console.log('All searches completed');
 	} catch(err) {
+		await driver.takeScreenshot().then(
+			function(image, err) {
+				require('fs').writeFile('err.png', image, 'base64', function(err) {
+					console.log(err);
+				});
+			}
+		);
 		throw new Error('Error in environment script: ', err, err.name, err.message);
 	}
 })();
