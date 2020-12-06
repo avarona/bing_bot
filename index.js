@@ -10,12 +10,15 @@ const { getRewardsTotal } = require('./js/rewards');
 
 const firefoxOptions = new firefox.Options().headless();
 const chromeOptions = new chrome.Options()
-	.addArguments('--no-sandbox')
-	.headless()
-	.setMobileEmulation({ deviceName: 'iPhone X' });
+  .addArguments("--no-sandbox")
+  .headless()
+  .setMobileEmulation({ deviceName: "iPhone X" });
 
 // Create browser instance
-const browser = new Builder().forBrowser('firefox').setFirefoxOptions(firefoxOptions).build();
+const browser = new Builder()
+  .forBrowser("firefox")
+  .setFirefoxOptions(firefoxOptions)
+  .build();
 const mobile = chrome.Driver.createSession(chromeOptions);
 
 const { E, P } = process.env;
@@ -27,40 +30,38 @@ const main = async (driver, min, max) => {
 		await signIn(driver, { E, P });
 		
 		// Calculate rewards before search
-		const rewardsBefore = await getRewardsTotal();
+    const rewardsBefore = await getRewardsTotal();
+    
+    // Fetch random words & start search loop
+    const count = await randomNumber(min, max);
+    const keywords = await getKeywords(count);
+    await searchLoop(driver, keywords);
 
-		// Fetch random words & start search loop
-		const count = await randomNumber(min, max);
-		const keywords = await getKeywords(count);
-		await searchLoop(driver, keywords);
-
-		// Show rewards earned
+    // Show rewards earned
 		const rewardsAfter = await getRewardsTotal();
 		console.log(`${rewardsBefore} -> ${rewardsAfter} earned!`);
-		
-		// Sign out of user
-		await signOut(driver);
-	} catch(err) {
-		throw new Error('Main script error: ', err);
-	} finally {
-		// Quit Selenium browser
-		await driver.quit();
-	}
+
+    // Sign out of user
+    await signOut(driver);
+  } catch (err) {
+    throw new Error("Main script error: ", err);
+  } finally {
+    // Quit Selenium browser
+    await driver.quit();
+  }
 };
 
 (async () => {
-	try {
-		console.log('========== Starting mobile ==========');
-		await main(mobile, 20, 35);
-		console.log('Mobile done.');
+  try {
+    console.log("========== Starting mobile ==========");
+    await main(mobile, 20, 35);
+    console.log("Mobile done.");
 
-		await sleep(5000);
+    await sleep(5000);
 
-		console.log('========== Starting browser ==========');
-		await main(browser, 30, 45);
-		console.log('Browser done');
-	
-		console.log('All searches completed');
+    console.log("========== Starting browser ==========");
+    await main(browser, 30, 45);
+    console.log("Browser done");
 	} catch(err) {
 		await driver.takeScreenshot().then(
 			function(image, err) {
@@ -69,5 +70,7 @@ const main = async (driver, min, max) => {
 				});
 			}
 		);
-	}
+	} finally {
+    console.log('All searches completed');
+  }
 })();

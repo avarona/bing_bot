@@ -8,8 +8,15 @@ jobs:
       - image: avarona/browser-test:latest
     steps:
       - checkout
-      - run: yarn install
-      - run: yarn start
+      - run:
+          name: Setup screenshots
+          command: mkdir /tmp/screenshots
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Start script
+          command: yarn start
       - store_artifacts:
           path: /tmp/screenshots
 workflows:
