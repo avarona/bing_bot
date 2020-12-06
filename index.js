@@ -30,7 +30,7 @@ const main = async (driver, min, max) => {
 		await signIn(driver, { E, P });
 		
 		// Calculate rewards before search
-    const rewardsBefore = await getRewardsTotal();
+    const rewardsBefore = await getRewardsTotal(driver);
     
     // Fetch random words & start search loop
     const count = await randomNumber(min, max);
@@ -38,7 +38,7 @@ const main = async (driver, min, max) => {
     await searchLoop(driver, keywords);
 
     // Show rewards earned
-		const rewardsAfter = await getRewardsTotal();
+		const rewardsAfter = await getRewardsTotal(driver);
 		console.log(`${rewardsBefore} -> ${rewardsAfter} earned!`);
 
     // Sign out of user
@@ -62,6 +62,8 @@ const main = async (driver, min, max) => {
     console.log("========== Starting browser ==========");
     await main(browser, 30, 45);
     console.log("Browser done");
+
+    console.log('All searches completed');
 	} catch(err) {
 		await driver.takeScreenshot().then(
 			function(image, err) {
@@ -70,7 +72,5 @@ const main = async (driver, min, max) => {
 				});
 			}
 		);
-	} finally {
-    console.log('All searches completed');
-  }
+	}
 })();
