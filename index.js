@@ -1,13 +1,12 @@
 require('dotenv').config();
 const fs = require('fs');
-const { Builder, By, until } = require('selenium-webdriver');
+const { Builder } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 const chrome = require('selenium-webdriver/chrome');
 const { signIn, signOut } = require('./js/auth');
 const { getKeywords, searchLoop } = require('./js/search');
 const { randomNumber, sleep } = require('./js/utils');
-
-const { URLS: { bingAccountURL }, XPATHS: { rewardsShortPath } } = require('./constants');
+const { getRewardsTotal } = require('./js/rewards');
 
 const firefoxOptions = new firefox.Options().headless();
 const chromeOptions = new chrome.Options()
@@ -28,7 +27,7 @@ const main = async (driver, min, max) => {
 		await signIn(driver, { E, P });
 		
 		// Calculate rewards before search
-		const rewardsBefore = await driver.findElement(By.xpath(rewardsShortPath)).getText();
+		const rewardsBefore = await getRewardsTotal();
 
 		// Fetch random words & start search loop
 		const count = await randomNumber(min, max);
@@ -36,15 +35,12 @@ const main = async (driver, min, max) => {
 		await searchLoop(driver, keywords);
 
 		// Show rewards earned
-		await driver.get(bingAccountURL);
-		const rewardsAfter = await driver.findElement(By.xpath(rewardsShortPath)).getText();
+		const rewardsAfter = await getRewardsTotal();
 		console.log(`${rewardsBefore} -> ${rewardsAfter} earned!`);
 		
 		// Sign out of user
 		await signOut(driver);
 	} catch(err) {
-		const screenshot = await driver.saveScreenshot(); // returns base64 string buffer
-		await fs.writeFileSync('/tmp/screenshots/error.png', screenshot);
 		throw new Error('Main script error: ', err);
 	} finally {
 		// Quit Selenium browser
@@ -68,11 +64,10 @@ const main = async (driver, min, max) => {
 	} catch(err) {
 		await driver.takeScreenshot().then(
 			function(image, err) {
-				require('fs').writeFile('err.png', image, 'base64', function(err) {
-					console.log(err);
+				fs.writeFile('err.png', image, 'base64', function(err) {
+					throw new Error('Error in environment script: ', err);
 				});
 			}
 		);
-		throw new Error('Error in environment script: ', err, err.name, err.message);
 	}
 })();
