@@ -44,13 +44,10 @@ const main = async (driver, min, max) => {
     // Sign out of user
     await signOut(driver);
   } catch (err) {
-    await driver.takeScreenshot().then(
-			function(image, err) {
-				fs.writeFile('err.png', image, 'base64', function(err) {
-					throw new Error('Main script error: ', err);
-				});
-			}
-		);
+    const image = await driver.takeScreenshot()    
+    await fs.writeFile('err.png', image, 'base64', function(err) {
+      throw new Error('Main script error: ', err);
+    });
   } finally {
     // Quit Selenium browser
     await driver.quit();
