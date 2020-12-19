@@ -44,7 +44,13 @@ const main = async (driver, min, max) => {
     // Sign out of user
     await signOut(driver);
   } catch (err) {
-    throw new Error("Main script error: ", err);
+    await driver.takeScreenshot().then(
+			function(image, err) {
+				fs.writeFile('err.png', image, 'base64', function(err) {
+					throw new Error('Main script error: ', err);
+				});
+			}
+		);
   } finally {
     // Quit Selenium browser
     await driver.quit();
@@ -65,12 +71,6 @@ const main = async (driver, min, max) => {
 
     console.log('All searches completed');
 	} catch(err) {
-		await driver.takeScreenshot().then(
-			function(image, err) {
-				fs.writeFile('err.png', image, 'base64', function(err) {
-					throw new Error('Error in environment script: ', err);
-				});
-			}
-		);
+    throw new Error('Error in environment script: ', err);
 	}
 })();
